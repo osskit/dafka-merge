@@ -45,7 +45,7 @@ public class Stream {
             }
             var result = new JSONObject();
             projections.forEach(projection -> {
-                result.put(projection.destination, value.get(projection.source));
+                result.put(projection.destination, value.at(projection.source).asText());
             });
             return new ObjectMapper().readTree(result.toString());
         } catch (Exception e) {
