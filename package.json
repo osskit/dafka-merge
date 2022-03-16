@@ -1,0 +1,16 @@
+{
+  "name": "dafka-merge",
+  "version": "0.1.0",
+  "description": "Dockerized Filter Kafka Stream",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/osskit/dafka-merge.git"
+  },
+  "author": "osskit",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/osskit/dafka-merge/issues"
+  },
+  "homepage": "https://github.com/osskit/dafka-merge#readme"
+}
