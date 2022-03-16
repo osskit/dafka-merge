@@ -1,6 +1,7 @@
 package service;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,9 +40,12 @@ public class Stream {
 
     private JsonNode project(JsonNode value, List<Projection> projections) {
         try {
+            if (projections.size() == 0) {
+                return value;
+            }
             var result = new JSONObject();
             projections.forEach(projection -> {
-                result.put(projection.source, value.get(projection.destination));
+                result.put(projection.destination, value.get(projection.source));
             });
             return new ObjectMapper().readTree(result.toString());
         } catch (Exception e) {
@@ -60,6 +64,9 @@ class Projection {
     }
 
     public static List<Projection> parseProjections(String projectionConfig) {
+        if (projectionConfig.isEmpty()) {
+            return Collections.emptyList();
+        }
         return Arrays.asList(projectionConfig.split(",")).stream()
                 .map(x -> new Projection(x.split("->")[0], x.split("->")[1]))
                 .collect(Collectors.toList());
