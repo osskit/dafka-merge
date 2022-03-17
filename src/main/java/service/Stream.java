@@ -26,13 +26,16 @@ public class Stream {
 
         var stream1 = builder
                 .stream(Config.SOURCE_TOPIC_1, Consumed.with(Serdes.String(), jsonSerde))
+                .peek((__, value) -> Monitor.incoming(Config.SOURCE_TOPIC_1, value.toPrettyString()))
                 .mapValues(value -> project(value, Projection.parseProjections(Config.SOURCE_TOPIC_1_PROJECTION)));
 
         var stream2 = builder
                 .stream(Config.SOURCE_TOPIC_2, Consumed.with(Serdes.String(), jsonSerde))
+                .peek((__, value) -> Monitor.incoming(Config.SOURCE_TOPIC_2, value.toPrettyString()))
                 .mapValues(value -> project(value, Projection.parseProjections(Config.SOURCE_TOPIC_2_PROJECTION)));
 
         stream1.merge(stream2)
+                .peek((__, value) -> Monitor.outgoing(Config.DESTINATION_TOPIC, value.toPrettyString()))
                 .to(Config.DESTINATION_TOPIC, Produced.with(Serdes.String(), jsonSerde));
 
         return builder;
