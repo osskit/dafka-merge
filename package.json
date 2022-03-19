@@ -1,6 +1,6 @@
 {
   "name": "dafka-merge",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Dockerized Filter Kafka Stream",
   "private": true,
   "repository": {
